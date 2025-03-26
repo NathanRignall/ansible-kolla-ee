@@ -1,10 +1,8 @@
----
-
 # Kolla-Ansible Deployment Guide
 
 This repository provides a ready-to-use execution environment and configuration templates to deploy OpenStack services using Kolla Ansible. Follow the instructions below to set up your configuration, generate passwords, and execute a full deployment using the Docker image `nathanrignall/kolla-ansible-ee:2024.1`.
 
----
+Deployment uses a prebuilt container execution environment for ansible so taht it can be executed in an offline environment.
 
 ## Getting Started
 
@@ -14,8 +12,6 @@ Create a working directory and navigate into it:
 ```bash
 mkdir kolla-config && cd kolla-config
 ```
-
----
 
 ## Setup Base Configuration
 
@@ -40,8 +36,6 @@ Edit the `multinode` file to include your host addresses:
 nano multinode
 ```
 
----
-
 ## Prepare Configuration
 
 ### Generate Passwords
@@ -57,8 +51,6 @@ Edit the globals configuration file to suit your environment:
 ```bash
 nano kolla/globals.yml
 ```
-
----
 
 ## Deployment
 
@@ -83,8 +75,6 @@ Deploy the OpenStack services:
 docker run --rm -it -v "$(pwd):/workdir" nathanrignall/kolla-ansible-ee:2024.1 kolla-ansible deploy -i /workdir/multinode --configdir /workdir/kolla
 ```
 
----
-
 ## Additional Information
 
 - **Customization:**  
@@ -93,4 +83,3 @@ docker run --rm -it -v "$(pwd):/workdir" nathanrignall/kolla-ansible-ee:2024.1 k
 - **Documentation:**  
   For more detailed configuration options and troubleshooting, refer to the [Kolla Ansible documentation](https://docs.openstack.org/kolla-ansible/latest/).
 
----
