@@ -1,0 +1,4 @@
+[submodule "kolla-ansible"]
+	path = kolla-ansible
+	url = https://opendev.org/openstack/kolla-ansible.git
+        branch = stable/2024.1
