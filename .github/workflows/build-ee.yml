@@ -35,5 +35,11 @@ jobs:
       - name: Build Execution Environment
         run: ansible-builder build --tag kolla-ansible-ee:2024.1
 
+      - name: Check Local Images (Podman)
+        run: podman image ls
+
+      - name: Check Local Images (Docker)
+        run: docker image ls
+
       - name: Push Execution Environment Image
         run: docker push kolla-ansible-ee:2024.1
