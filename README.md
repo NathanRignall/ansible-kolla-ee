@@ -1,4 +1,4 @@
-# Kolla-Ansible Deployment Guide
+# Kolla-Ansible Deployment (Using Prebuilt Execution Environment)
 
 This repository provides a ready-to-use execution environment and configuration templates to deploy OpenStack services using Kolla Ansible. Follow the instructions below to set up your configuration, generate passwords, and execute a full deployment using the Docker image `nathanrignall/kolla-ansible-ee:2024.1`.
 
