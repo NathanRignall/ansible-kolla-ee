@@ -6,7 +6,7 @@ Deployment uses a prebuilt container ansible execution environment for ansible s
 
 ## Getting Started
 
-### 1. Create Work Folder
+### Create Work Folder
 Create a working directory and navigate into it:
 
 ```bash
