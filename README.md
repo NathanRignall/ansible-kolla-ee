@@ -1,6 +1,6 @@
 # Kolla-Ansible Deployment (Using Prebuilt Execution Environment)
 
-This repository provides a ready-to-use execution environment and configuration templates to deploy OpenStack services using Kolla Ansible. Follow the instructions below to set up your configuration, generate passwords, and execute a full deployment using the Docker image `nathanrignall/kolla-ansible-ee:2024.1`.
+This repository provides a ready-to-use execution environment and configuration templates to deploy OpenStack services using Kolla Ansible. Follow the instructions below to set up your configuration, generate passwords, and execute a full deployment using the Docker image `nathanrignall/kolla-ansible-ee:2025.1`.
 
 Deployment uses a prebuilt container ansible execution environment for ansible so that it can be executed in an offline environment.
 
@@ -19,14 +19,14 @@ mkdir kolla-config && cd kolla-config
 Copy the sample configuration files to a local `kolla` directory:
 
 ```bash
-docker run --rm -it -v "$(pwd):/workdir" nathanrignall/kolla-ansible-ee:2024.1 cp /usr/local/share/kolla-ansible/etc_examples/kolla/ /workdir/kolla
+docker run --rm -it -v "$(pwd):/workdir" nathanrignall/kolla-ansible-ee:2025.1 cp /usr/local/share/kolla-ansible/etc_examples/kolla/ /workdir/kolla
 ```
 
 ### Copy the All-in-One Inventory File
 Copy the inventory file into your working directory:
 
 ```bash
-docker run --rm -it -v "$(pwd):/workdir" nathanrignall/kolla-ansible-ee:2024.1 cp /usr/local/share/kolla-ansible/ansible/inventory/multinode /workdir/
+docker run --rm -it -v "$(pwd):/workdir" nathanrignall/kolla-ansible-ee:2025.1 cp /usr/local/share/kolla-ansible/ansible/inventory/multinode /workdir/
 ```
 
 ### Update Inventory File
@@ -42,7 +42,7 @@ nano multinode
 Generate the necessary passwords and update the passwords configuration file:
 
 ```bash
-docker run --rm -it -v "$(pwd):/workdir" nathanrignall/kolla-ansible-ee:2024.1 kolla-genpwd -p /workdir/kolla/passwords.yml
+docker run --rm -it -v "$(pwd):/workdir" nathanrignall/kolla-ansible-ee:2025.1 kolla-genpwd -p /workdir/kolla/passwords.yml
 ```
 
 ### Configure Globals
@@ -58,21 +58,21 @@ nano kolla/globals.yml
 Verify connectivity and status of your hosts:
 
 ```bash
-docker run --rm -it -v "$(pwd):/workdir" nathanrignall/kolla-ansible-ee:2024.1 ansible -i /workdir/multinode all -m ping
+docker run --rm -it -v "$(pwd):/workdir" nathanrignall/kolla-ansible-ee:2025.1 ansible -i /workdir/multinode all -m ping
 ```
 
 ### Execute Prechecks
 Run the pre-deployment checks:
 
 ```bash
-docker run --rm -it -v "$(pwd):/workdir" nathanrignall/kolla-ansible-ee:2024.1 kolla-ansible prechecks -i /workdir/multinode --configdir /workdir/kolla
+docker run --rm -it -v "$(pwd):/workdir" nathanrignall/kolla-ansible-ee:2025.1 kolla-ansible prechecks -i /workdir/multinode --configdir /workdir/kolla
 ```
 
 ### Complete Deployment
 Deploy the OpenStack services:
 
 ```bash
-docker run --rm -it -v "$(pwd):/workdir" nathanrignall/kolla-ansible-ee:2024.1 kolla-ansible deploy -i /workdir/multinode --configdir /workdir/kolla
+docker run --rm -it -v "$(pwd):/workdir" nathanrignall/kolla-ansible-ee:2025.1 kolla-ansible deploy -i /workdir/multinode --configdir /workdir/kolla
 ```
 
 ## Additional Information
