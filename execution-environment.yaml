@@ -9,7 +9,7 @@ dependencies:
   ansible_runner:
     package_pip: ansible-runner
   python:
-    - git+https://opendev.org/openstack/kolla-ansible@stable/2024.1
+    - git+https://opendev.org/openstack/kolla-ansible@stable/2025.1
   galaxy:
     collections:
       - name: ansible.utils
