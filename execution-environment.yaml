@@ -29,6 +29,7 @@ dependencies:
       - name: redhatinsights.insights
       - name: kubevirt.core
       - name: ansible.utils
+      - name: community.general
   system: |
     git-core [platform:rpm]
     python3.11-devel [platform:rpm compile]
