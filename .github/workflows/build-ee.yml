@@ -33,7 +33,7 @@ jobs:
           pip install ansible-builder
 
       - name: Build Execution Environment
-        run: ansible-builder build --tag ${{ secrets.DOCKER_HUB_USERNAME }}/kolla-ansible-ee:2024.2
+        run: ansible-builder build --tag ${{ secrets.DOCKER_HUB_USERNAME }}/kolla-ansible-ee:2024.2 -v
 
       - name: Check Local Images (Podman)
         run: podman image ls
