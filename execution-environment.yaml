@@ -1,24 +1,76 @@
+---
 version: 3
 images:
   base_image:
-    name: quay.io/centos/centos:stream10
-
+    name: quay.io/centos/centos:stream9
 dependencies:
+  python_interpreter:
+    package_system: python3.11
+    python_path: /usr/bin/python3.11
   ansible_core:
-    package_pip: 'ansible-core<2.19,>=2.17' 
+    package_pip: 'ansible-core<2.19,>=2.17'
   ansible_runner:
     package_pip: ansible-runner
-  python:
-    - git+https://opendev.org/openstack/kolla-ansible@stable/2025.1
-  galaxy:
+  galaxy: |
+    ---
     collections:
+      - name: awx.awx
+      - name: azure.azcollection
+        version: ">=2.1.0"
+      - name: amazon.aws
+      - name: theforeman.foreman
+      - name: google.cloud
+      - name: openstack.cloud
+      - name: community.vmware
+      - name: ovirt.ovirt
+      - name: kubernetes.core
+      - name: ansible.posix
+      - name: ansible.windows
+      - name: redhatinsights.insights
+      - name: kubevirt.core
       - name: ansible.utils
-
+  system: |
+    git-core [platform:rpm]
+    python3.11-devel [platform:rpm compile]
+    libcurl-devel [platform:rpm compile]
+    krb5-devel [platform:rpm compile]
+    krb5-workstation [platform:rpm]
+    subversion [platform:rpm]
+    subversion [platform:dpkg]
+    git-lfs [platform:rpm]
+    sshpass [platform:rpm]
+    rsync [platform:rpm]
+    epel-release [platform:rpm]
+    unzip [platform:rpm]
+    podman-remote [platform:rpm]
+    cmake [platform:rpm compile]
+    gcc [platform:rpm compile]
+    gcc-c++ [platform:rpm compile]
+    make [platform:rpm compile]
+    openssl-devel [platform:rpm compile]
+  python: |
+    git+https://github.com/ansible/ansible-sign
+    ncclient
+    paramiko
+    pykerberos
+    pyOpenSSL
+    pypsrp[kerberos,credssp]
+    pywinrm[kerberos,credssp]
+    toml
+    pexpect>=4.5
+    python-daemon
+    pyyaml
+    six
+    receptorctl
+    git+https://opendev.org/openstack/kolla-ansible@stable/2025.1
 additional_build_steps:
   append_base:
-    # Install git, bash, etc.
-    - RUN dnf install -y git which bash
-    - RUN ln -sf /bin/bash /bin/sh
+    - RUN $PYCMD -m pip install -U pip
   append_final:
-    # Install kolla-ansible dependencies
+    - COPY --from=quay.io/ansible/receptor:devel /usr/bin/receptor /usr/bin/receptor
+    - RUN mkdir -p /var/run/receptor
+    - RUN git lfs install --system
+    # SymLink `python` -> `python3.11`
+    - RUN alternatives --install /usr/bin/python python /usr/bin/python3.11 311
     - RUN kolla-ansible install-deps
+    
