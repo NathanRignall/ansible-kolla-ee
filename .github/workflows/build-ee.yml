@@ -2,9 +2,9 @@ name: Build Ansible Execution Environment
 
 on:
   push:
-    branches: [ main ]
+    branches: [ 2024.2 ]
   pull_request:
-    branches: [ main ]
+    branches: [ 2024.2 ]
 
 jobs:
   build-ee:
