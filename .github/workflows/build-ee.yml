@@ -2,7 +2,7 @@ name: Build Ansible Execution Environment
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, 2024.1 ]
   pull_request:
     branches: [ main ]
 
@@ -33,7 +33,7 @@ jobs:
           pip install ansible-builder
 
       - name: Build Execution Environment
-        run: ansible-builder build --tag ${{ secrets.DOCKER_HUB_USERNAME }}/kolla-ansible-ee:2024.2 -vvv
+        run: ansible-builder build --tag ${{ secrets.DOCKER_HUB_USERNAME }}/kolla-ansible-ee:2024.1 -vvv
 
       - name: Check Local Images (Podman)
         run: podman image ls
@@ -42,4 +42,4 @@ jobs:
         run: docker image ls
 
       - name: Push Execution Environment Image
-        run: podman push ${{ secrets.DOCKER_HUB_USERNAME }}/kolla-ansible-ee:2024.2
+        run: podman push ${{ secrets.DOCKER_HUB_USERNAME }}/kolla-ansible-ee:2024.1
