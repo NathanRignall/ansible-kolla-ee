@@ -11,7 +11,7 @@ set -e # Exit immediately if a command exits with a non-zero status.
 BASE_IMAGE="nathanrignall/kolla-ansible-ee"
 
 # The name for your new custom image. Change this if you like.
-CUSTOM_IMAGE_NAME="local-kolla-ansible-ee"
+CUSTOM_IMAGE_NAME="my-kolla-ansible-ee"
 
 # Get the current user's ID and Group ID
 # This ensures file permissions on mounted volumes are correct.
@@ -54,13 +54,15 @@ echo "--- Dockerfile Created ---"
 cat "${BUILD_DIR}/Dockerfile"
 echo "--------------------------"
 
-# Build the new Docker image
+# Build the new Docker image using a bash array for robustness
 echo "Building custom image: ${CUSTOM_IMAGE_NAME}..."
-docker build \\
-  --build-arg UID=${USER_ID} \\
-  --build-arg GID=${GROUP_ID} \\
-  -t ${CUSTOM_IMAGE_NAME} \\
+build_args=(
+  --build-arg "UID=${USER_ID}"
+  --build-arg "GID=${GROUP_ID}"
+  -t "${CUSTOM_IMAGE_NAME}"
   "${BUILD_DIR}"
+)
+docker build "${build_args[@]}"
 
 # Clean up the temporary directory
 rm -rf "${BUILD_DIR}"
@@ -68,4 +70,14 @@ rm -rf "${BUILD_DIR}"
 echo ""
 echo "Build complete!"
 echo "A new Docker image named '${CUSTOM_IMAGE_NAME}' has been created."
+echo ""
+echo "--- How to Use ---"
+echo "You can now run your Ansible playbooks with a much simpler command:"
+echo ""
+echo "docker run -it --rm \\"
+echo "  -v \"/home/cloud/kolla-config:/workdir\" \\"
+echo "  -v \"/home/cloud/openstack:/etc/openstack\" \\"
+echo "  -v \"\${SSH_AUTH_SOCK}:/ssh-agent\" \\"
+echo "  -e SSH_AUTH_SOCK=\"/ssh-agent\" \\"
+echo "  ${CUSTOM_IMAGE_NAME} ansible-playbook your-playbook.yml"
 echo ""
