@@ -30,6 +30,10 @@ cat > "${BUILD_DIR}/Dockerfile" <<EOF
 # Start from your specified base image
 FROM ${BASE_IMAGE}
 
+# Explicitly switch to root to ensure we have permissions to create users.
+# This is important if the base image already sets a non-root user.
+USER root
+
 # Use ARG to get build-time variables for user/group details
 ARG UID=${USER_ID}
 ARG GID=${GROUP_ID}
