@@ -4,9 +4,9 @@ images:
   base_image:
     name: quay.io/centos/centos:stream9
 dependencies:
-  python_interpreter:
-    package_system: python3.11
-    python_path: /usr/bin/python3.11
+  #python_interpreter:
+  #  package_system: python3.11
+  #  python_path: /usr/bin/python3.11
   ansible_core:
     package_pip: 'ansible-core<2.17,>=2.15'
   ansible_runner:
@@ -32,7 +32,7 @@ dependencies:
       - name: community.general
   system: |
     git-core [platform:rpm]
-    python3.11-devel [platform:rpm compile]
+    #python3.11-devel [platform:rpm compile]
     libcurl-devel [platform:rpm compile]
     krb5-devel [platform:rpm compile]
     krb5-workstation [platform:rpm]
@@ -75,6 +75,6 @@ additional_build_steps:
     - RUN mkdir -p /var/run/receptor
     - RUN git lfs install --system
     # SymLink `python` -> `python3.11`
-    - RUN alternatives --install /usr/bin/python python /usr/bin/python3.11 311
+    # RUN alternatives --install /usr/bin/python python /usr/bin/python3.11 311
     - RUN kolla-ansible install-deps
     
