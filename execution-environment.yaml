@@ -3,16 +3,15 @@ version: 3
 images:
   base_image:
     name: quay.io/centos/centos:stream9
+
 dependencies:
-  #python_interpreter:
-  #  package_system: python3.11
-  #  python_path: /usr/bin/python3.11
   ansible_core:
-    package_pip: 'ansible-core<2.17,>=2.15'
+    package_pip: 'ansible-core>=2.15,<2.16.99'
   ansible_runner:
     package_pip: ansible-runner
-  galaxy: |
-    ---
+  python:
+    - git+https://opendev.org/openstack/kolla-ansible@stable/2024.1
+  galaxy:
     collections:
       - name: awx.awx
       - name: azure.azcollection
@@ -32,7 +31,6 @@ dependencies:
       - name: community.general
   system: |
     git-core [platform:rpm]
-    #python3.11-devel [platform:rpm compile]
     libcurl-devel [platform:rpm compile]
     krb5-devel [platform:rpm compile]
     krb5-workstation [platform:rpm]
@@ -67,14 +65,11 @@ dependencies:
     git+https://opendev.org/openstack/kolla-ansible@stable/2024.1
 additional_build_steps:
   append_base:
-    - RUN $PYCMD -m pip install -U pip
     # Fix bash for kolla ansible
     - RUN ln -sf /bin/bash /bin/sh
   append_final:
     - COPY --from=quay.io/ansible/receptor:devel /usr/bin/receptor /usr/bin/receptor
     - RUN mkdir -p /var/run/receptor
     - RUN git lfs install --system
-    # SymLink `python` -> `python3.11`
-    # RUN alternatives --install /usr/bin/python python /usr/bin/python3.11 311
     - RUN kolla-ansible install-deps
     
