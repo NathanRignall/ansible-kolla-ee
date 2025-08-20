@@ -12,15 +12,23 @@ dependencies:
     - git+https://opendev.org/openstack/kolla-ansible@stable/2024.1
   galaxy:
     collections:
+      - name: ansible.netcommon
+        version: <5
+      - name: ansible.posix
+        version: <2
       - name: ansible.utils
+        version: <5
+      - name: community.crypto
+        version: <3
       - name: community.general
+        version: <7
       - name: community.docker
+        version: <4
+      - name: containers.podman
+        version: <2
 
 additional_build_steps:
   append_base:
     # Install git, bash, etc.
     - RUN dnf install -y git which bash
     - RUN ln -sf /bin/bash /bin/sh
-  append_final:
-    # Install kolla-ansible dependencies
-    - RUN kolla-ansible install-deps
