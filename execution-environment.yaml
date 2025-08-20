@@ -32,6 +32,7 @@ dependencies:
         source: https://galaxy.ansible.com
         version: <2
   system: |
+    which [platform:rpm]
     git-core [platform:rpm]
     python3.9-devel [platform:rpm compile]
     libcurl-devel [platform:rpm compile]
