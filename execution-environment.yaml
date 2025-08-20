@@ -13,6 +13,8 @@ dependencies:
   galaxy:
     collections:
       - name: ansible.utils
+      - name: community.general
+      - name: community.docker
 
 additional_build_steps:
   append_base:
