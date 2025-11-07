@@ -53,7 +53,7 @@ dependencies:
     openssl-devel [platform:rpm compile]
     kmod [platform:rpm]
   python: |
-    git+https://github.com/ansible/ansible-sign
+    git+https://github.com/ansible/ansible-sign@v0.1.2
     ncclient
     paramiko
     pykerberos
